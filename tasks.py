@@ -108,7 +108,7 @@ def token_counts(string: str, k: int = 1) -> dict:
         freq[word] += 1
     counts = {}
     for key, value in freq.items():
-        if freq[key] > k:
+        if freq[key] >= k:
             counts[key] = value
     
     return counts
