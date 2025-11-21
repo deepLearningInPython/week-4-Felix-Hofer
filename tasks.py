@@ -110,7 +110,6 @@ def token_counts(string: str, k: int = 1) -> dict:
     for key, value in freq.items():
         if freq[key] >= k:
             counts[key] = value
-    
     return counts
 
 # test:
@@ -202,18 +201,14 @@ all(i2t[t2i[tok]] == tok for tok in t2i) # should be True
 # Your code here:
 # -----------------------------------------------
 def tokenize_and_encode(documents: list) -> list:
-    def tokenizer(string: str) -> list:
-        punct = ".,!?;:'\"()-[]{}<>/*\\"
-        tokens = [word.strip(punct) for word in string.split()]
-        tokens = [word.lower() for word in tokens]
-        return tokens
     t2i, i2t = make_vocabulary_map(documents)
-    enc = []
-    tok = [tokenizer(doc) for doc in documents]
-    for l in tok:
-        enc.append([t2i[word] for word in l])
-    return enc, t2i, i2t
 
+    enc = []
+    for doc in documents:
+        tokens = tokenize(doc)
+        enc.append([t2i[word] for word in tokens])
+    print(enc)
+    return enc, t2i, i2t
 # Test:
 enc, t2i, i2t = tokenize_and_encode([text, 'What a luck we had today!'])
 " | ".join([" ".join(i2t[i] for i in e) for e in enc]) == 'the quick brown fox jumps over the lazy dog | what a luck we had today'
